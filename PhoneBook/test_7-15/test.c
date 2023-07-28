@@ -40,6 +40,7 @@ int main()
 			PrintContact(&con);
 			break;
 		case EXIT:
+			WriteData(&con);
 			DestroyContact(&con);
 			break;
 		 default:

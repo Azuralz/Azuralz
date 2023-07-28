@@ -18,6 +18,26 @@ void InitContact(Contact* pc)//初始化通讯录 动态
 	}
 	pc->sz = 0;
 	pc->capacity = Increas;
+	LoadContact(pc);
+}
+
+void LoadContact(Contact* pc)//加载数据文件
+{
+	FILE* p = fopen("Contact.dat", "r");
+	if (p == NULL)
+	{
+		perror("fopen");
+		return;
+	}
+	PepInfor num = { 0 };
+	while (fread(&num, sizeof(PepInfor), 1, p))//当读取结束是fread返回的是o因为每次读取1个数据
+	{
+		Checkcapacity(pc);//考虑增容
+		pc->data[pc->sz] = num;
+		pc->sz++;
+	}
+	fclose(p);
+	p == NULL;
 }
 //void ADDContact(Contact* pc)//增加项目静态版本
 //{
@@ -42,11 +62,11 @@ void InitContact(Contact* pc)//初始化通讯录 动态
 //		printf("添加成功\n");
 //	}
 //}
-void ADDContact(Contact* pc)//增加项目动态版本
+void Checkcapacity(Contact* pc)//检查容量是否增容
 {
 	if (pc->sz == pc->capacity)
 	{
-		PepInfor* ptr = (PepInfor*)realloc(pc->data, (pc->capacity+Increas) * sizeof(PepInfor));
+		PepInfor* ptr = (PepInfor*)realloc(pc->data, (pc->capacity + Increas) * sizeof(PepInfor));
 		if (ptr != NULL)
 		{
 			pc->data = ptr;
@@ -60,8 +80,10 @@ void ADDContact(Contact* pc)//增加项目动态版本
 			return;
 		}
 	}
-	else
-	{
+}
+void ADDContact(Contact* pc)//增加项目动态版本
+{
+	Checkcapacity(pc);//考虑增容问题
 		printf("请输入名字：");
 		scanf("%s", pc->data[pc->sz].name);
 		printf("请输入年龄：");
@@ -74,7 +96,6 @@ void ADDContact(Contact* pc)//增加项目动态版本
 		scanf("%s", pc->data[pc->sz].addr);
 		pc->sz++;
 		printf("添加成功\n");
-	}
 }
 
 void PrintContact(const Contact* pc)//打印通讯录
@@ -191,4 +212,20 @@ void DestroyContact(Contact* pc)//销毁内存
 	pc->data = NULL;
 	pc->sz = 0;
 	pc->capacity = 0;
+}
+
+void WriteData(Contact* pc)//保存数据
+{
+	FILE* p = fopen("Contact.dat", "w");
+	if (p == NULL)
+	{
+		perror("WriteData");
+		return;
+	}
+	for (int i = 0; i < pc->sz; i++)
+	{
+		fwrite(pc->data + i, sizeof(PepInfor), 1, p);
+	}
+	fclose(p);
+	p = NULL;
 }

@@ -49,3 +49,6 @@ void SearchContact(Contact* pc);//查找通讯录
 void ModifyContact(Contact*pc);//修改通讯录
 void SortContact(Contact* pc);//排序
 void DestroyContact(Contact*pc);//销毁内存 
+void WriteData(Contact*pc);//保存数据到文件中
+void LoadContact(Contact*pc);//加载数据文件
+void Checkcapacity(Contact*pc);//检查容量是否增容

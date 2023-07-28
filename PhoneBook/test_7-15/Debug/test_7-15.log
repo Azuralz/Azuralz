@@ -1,2 +1,6 @@
-﻿  test.c
-  test_7-15.vcxproj -> D:\代码\PhoneBook\Debug\test_7-15.exe
+﻿  PhoneBook.c
+D:\My\Gitcode\PhoneBook\test_7-15\PhoneBook.c(40,4): warning C4553: “==”: 未使用表达式结果；是否打算使用“=”?
+  test.c
+  正在生成代码...
+  LINK : 没有找到 D:\My\Gitcode\PhoneBook\Debug\test_7-15.exe 或上一个增量链接没有生成它；正在执行完全链接
+  test_7-15.vcxproj -> D:\My\Gitcode\PhoneBook\Debug\test_7-15.exe
