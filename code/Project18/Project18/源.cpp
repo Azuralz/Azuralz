@@ -1,0 +1,261 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include <iostream>
+#include<windows.h>
+#include <synchapi.h>
+#define ROWS 11
+#define COLS 11
+#define ROW 9
+#define COL 9
+#define easy_mine 10
+int record = 0;
+void display(char board[ROWS][COLS], int row, int col)//打印棋盘，传什么打印什么
+{
+    int i = 0;
+    int j = 0;
+    for (j = 0; j < col + 1; j++)
+    {
+        printf("   %d", j);
+    }
+    printf("\n");
+    printf("\n");
+    for (i = 1; i < row + 1; i++)
+    {
+        printf("   %d", i);
+        for (j = 1; j < col + 1; j++)
+        {
+            printf("   %c", board[i][j]);
+        }
+        printf("\n");
+        printf("\n\n");
+    }
+}
+int count_mine(char mine[ROWS][COLS], int i, int j)//数包括自己在内的九个格子的雷数
+{
+    int a = 0;
+    int b = 0;
+    int count = 0;
+    for (a = i - 1; a <= i + 1; a++)
+    {
+        for (b = j - 1; b <= j + 1; b++)
+        {
+            // if(a> 0 && b > 0 && a < ROW + 1 && b < COL + 1)
+            count = mine[a][b] - '0' + count;//'1'-'0'=1;
+        }
+    }
+    return count;
+}
+void expendboard(char mine[ROWS][COLS], char show[ROWS][COLS], int i, int j)//进行空白展开
+{
+    int a = 0;
+    int b = 0;
+    int count = count_mine(mine, i, j);
+    if (count == 0)
+    {
+        show[i][j] = ' ';
+        for (a = i - 1; a <= i + 1; a++)
+        {
+            for (b = j - 1; b <= j + 1; b++)
+            {
+                if (a > 0 && b > 0 && a < ROW + 1 && b < COL + 1 && show[a][b] == '?' && (mine[a][b] != '1' || show[a][b] == '*'))
+                    expendboard(mine, show, a, b);//递归：连续展开
+            }
+        }
+    }
+    else
+    {
+        show[i][j] = count + '0';   //显示雷数
+
+    }
+}
+int search_mine(char mine[ROWS][COLS], char show[ROWS][COLS], int row, int col)//排雷
+{
+    int i = 0;
+    int j = 0;
+    int win = 0;
+    int input = 0;
+    int mark = 0;
+    int step = 0;
+    while (win < easy_mine)//标记临界值
+    {
+        printf("********************\n");
+        printf("******* 1.标记 *****\n");
+        printf("******* 2.查看 *****\n");
+        printf("********************\n");
+        printf("\n\t\t\t\t\t已标记:%d\n", win);//显示标记个数
+        printf("\n\t\t\t\t\t排雷步数:%d\n", step);//步数
+        printf("请选择:>");
+        scanf_s("%d", &input);
+        switch (input)
+        {
+
+        case 1:
+            printf("选择要标记的地块坐标（再次标记后取消）:>");
+            scanf_s("%d %d", &i, &j);
+            if (show[i][j] == '?' && mark <= easy_mine)
+            {
+                show[i][j] = '*';
+                mark++;
+                if (mine[i][j] == '1')
+                    win++;
+                system("cls");//清除上一步              
+                display(show, ROW, COL);
+            }
+            else if (mark > 10)
+                printf("标记已满，请取消\n");
+            else if (show[i][j] == '*')
+            {
+                show[i][j] = '?';
+                mark--;
+                if (mine[i][j] == '1')//正确的雷
+                    win--;
+                display(show, ROW, COL);
+            }
+            break;
+        case 2:
+            while (1)
+            {
+                step++;
+                printf("选择要查看的地块坐标:>");
+                scanf_s("%d %d", &i, &j);
+                if (step == 1 && show[i][j] == '?' && mine[i][j] == '1')
+                {
+                    mine[i][j] = '0';
+                    while (1)
+                    {
+                        int a = rand() % 9 + 1;
+                        int b = rand() % 9 + 1;
+                        if ((a != i || b != j) && mine[a][b] == '0')
+                        {
+                            mine[a][b] = '1';
+                            break;
+                        }
+                    }
+                }
+                if (show[i][j] == '?' && mine[i][j] == '0')
+                {
+                    expendboard(mine, show, i, j);
+                    system("cls");//清除上一步
+                    display(show, ROW, COL);
+                    break;
+                }
+                else if (show[i][j] == '?' && mine[i][j] == '1')
+                {
+                    step++;
+                    system("cls");
+                    printf("很遗憾，你被炸死了\n");
+                    printf("雷阵如下\n");
+                    display(mine, ROW, COL);
+                    printf("\n\t\t\t排雷步数:%d\n", step);//步数
+                    break;
+                }
+                else if (show[i][j] != '?')
+                    printf("坐标非法，请重输\n");
+            }
+            break;
+        default:
+            system("cls");
+            display(show, ROW, COL);
+            printf("输入非法，请重输\n");
+            break;
+        }
+        if (mine[i][j] == '1' && input == 2)
+            break;
+        if (win == easy_mine || step == col * row - easy_mine)
+        {
+            system("cls");
+            display(show, ROW, COL);//展示成果
+            printf("排雷成功\n");
+            printf("\n\t\t\t排雷步数:%d\n", step);//步数
+            if ((record != 0 && record > step) || record == 0)
+                record = step;
+            system("pause");
+            break;
+        }
+    }
+    return 1;
+}
+void setmine(char board[ROWS][COLS], int row, int col)//埋雷
+{
+    int count = easy_mine;
+    while (count > 0)
+    {
+        int i = rand() % 9 + 1;
+        int j = rand() % 9 + 1;
+        if (board[i][j] == '0')
+        {
+            count--;
+            board[i][j] = '1';
+        }
+
+
+    }
+}
+void initboard(char board[ROWS][COLS], int row, int col, char set)//初始化show棋盘和mine棋盘，set，传什么打印什么
+{
+    int i = 0;
+    int j = 0;
+    for (i = 0; i < row + 2; i++)
+    {
+        for (j = 0; j < col + 2; j++)
+        {
+            board[i][j] = set;
+        }
+    }
+}
+void game()
+{
+    char board1[ROWS][COLS] = { 0 };
+    char board2[ROWS][COLS] = { 0 };
+    initboard(board1, ROW, COL, '0');//mine
+    initboard(board2, ROW, COL, '?');//show
+    display(board2, ROW, COL);
+    setmine(board1, ROW, COL);
+    display(board1, ROW, COL);//用于debug
+    while (1)
+    {
+        int p = search_mine(board1, board2, ROW, COL);
+        if (p == 1)
+            break;
+    }
+
+}
+void menu()
+{
+    printf("*******************************\n");
+    printf("*****  1. play  0. exit   *****\n");
+    printf("*******************************\n");
+}
+void text()
+{
+    int input = 0;
+    do
+    {
+        printf("\n\t\t\t扫雷\n");
+        printf("\t\t\t\t\t最好记录:%d\n", record);
+        menu();
+        printf("请选择:>");
+        scanf_s("%d", &input);
+        system("cls");
+        switch (input)
+        {
+        case 1:
+            printf("游戏开始\n");
+            game();
+            Sleep(1000);
+            system("cls");
+            break;
+        case 0:
+            printf("退出游戏\n");
+            break;
+        default:
+            printf("输入非法，请重输！\n");
+            break;
+        }
+
+    } while (input);
+}
+int main()
+{
+    srand((unsigned int)time(NULL));//设置由时间设置的随机数种子
+    text();
+}

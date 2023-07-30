@@ -1,0 +1,14 @@
+﻿  Practice.c
+D:\代码\Practice\Practice\Practice.c(29,15): error C2065: “b”: 未声明的标识符
+D:\代码\Practice\Practice\Practice.c(29,19): error C2065: “c”: 未声明的标识符
+D:\代码\Practice\Practice\Practice.c(30,11): error C2065: “b”: 未声明的标识符
+D:\代码\Practice\Practice\Practice.c(30,15): error C2065: “c”: 未声明的标识符
+D:\代码\Practice\Practice\Practice.c(31,12): error C3873: “0x201c”: 不允许将此字符作为标识符的第一个字符
+D:\代码\Practice\Practice\Practice.c(31,15): error C2017: 非法的转义序列
+D:\代码\Practice\Practice\Practice.c(31,16): error C2065: ““”: 未声明的标识符
+D:\代码\Practice\Practice\Practice.c(31,16): warning C4047: “函数”:“const char *const ”与“int”的间接级别不同
+D:\代码\Practice\Practice\Practice.c(31,12): warning C4024: “printf”: 形参和实参 1 的类型不同
+D:\代码\Practice\Practice\Practice.c(31,16): error C2146: 语法错误: 缺少“)”(在标识符“n”的前面)
+D:\代码\Practice\Practice\Practice.c(31,28): error C3872: “0x201d”: 此字符不允许在标识符中使用
+D:\代码\Practice\Practice\Practice.c(31,41): error C2059: 语法错误:“)”
+D:\代码\Practice\Practice\Practice.c(32,2): error C2059: 语法错误:“}”

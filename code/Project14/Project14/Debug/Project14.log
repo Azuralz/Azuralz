@@ -1,0 +1,4 @@
+﻿  7-03.c
+D:\代码\Project14\Project14\7-03.c(73,12): warning C4047: “函数”:“int (*)[5]”与“int [5]”的间接级别不同
+D:\代码\Project14\Project14\7-03.c(73,9): warning C4024: “print1”: 形参和实参 1 的类型不同
+  Project14.vcxproj -> D:\代码\Project14\Debug\Project14.exe

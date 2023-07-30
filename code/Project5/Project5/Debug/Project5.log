@@ -1,0 +1,4 @@
+﻿  6-23.c
+D:\代码\Project5\Project5\6-23.c(184,19): warning C4477: “scanf”: 格式字符串“%d”需要类型“int *”的参数，但可变参数 1 拥有了类型“char *”
+D:\代码\Project5\Project5\6-23.c(184,19): message : 请考虑在格式字符串中使用“%hhd”
+  Project5.vcxproj -> D:\代码\Project5\Debug\Project5.exe
