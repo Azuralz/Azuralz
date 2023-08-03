@@ -1,25 +1,15 @@
 #include "stm32f10x.h"     // Device header
 #include "Delay.h"         //shijian
-#include "LED.h"
-#include "KEY.h"
-
-uint8_t KeyNum;
+#include "OLED.h"
+#include "ConutSensor.h"
 
 int main(void)
 {
-	LED_Init();
-	Key_Init();
-	
+	OLED_Init();
+	ConutSensor_Init();
+	OLED_ShowString(1, 1, "Count:");
 	while(1)
-	{	
-		KeyNum = Key_GetNum();
-		if(KeyNum == 1)
-		{
-			LED1_Turn();
-		}
-		if(KeyNum == 2)
-		{
-			LED2_Turn();
-		}
-	}	
+	{
+		OLED_ShowNum(1, 7, ConutSensor_Get(), 7);
+	}
 }
