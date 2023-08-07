@@ -319,3 +319,12 @@ void OLED_Init(void)
 		
 	OLED_Clear();				//OLED清屏
 }
+
+void OLED_ShowPag(void)
+{
+	uint8_t i = 0;
+	for(i = 0;i < 518; i++)
+	{
+		OLED_I2C_SendByte(gImage_3[i]);
+	}
+}
