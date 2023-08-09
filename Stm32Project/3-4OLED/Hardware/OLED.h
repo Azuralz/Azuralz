@@ -10,5 +10,7 @@ void OLED_ShowSignedNum(uint8_t Line, uint8_t Column, int32_t Number, uint8_t Le
 void OLED_ShowHexNum(uint8_t Line, uint8_t Column, uint32_t Number, uint8_t Length);
 void OLED_ShowBinNum(uint8_t Line, uint8_t Column, uint32_t Number, uint8_t Length);
 void OLED_ShowPag(void);
-	
+void OLED_WriteCommand(uint8_t Command);
+void OLED_SHOWpictur(void);
+
 #endif

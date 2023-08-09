@@ -6,9 +6,10 @@
 int main(void)
 {
 	OLED_Init();
+	OLED_SHOWpictur();
 	
 	while(1)
 	{
-		OLED_ShowPag();
+
 	}
 }
