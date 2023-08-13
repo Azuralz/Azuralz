@@ -1,7 +1,7 @@
 .\main.o: User\main.c
 .\main.o: .\Start\stm32f10x.h
 .\main.o: .\Start\core_cm3.h
-.\main.o: E:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
+.\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\main.o: .\Start\system_stm32f10x.h
 .\main.o: .\User\stm32f10x_conf.h
 .\main.o: .\Library\stm32f10x_adc.h
@@ -30,4 +30,4 @@
 .\main.o: .\Library\misc.h
 .\main.o: .\System\Delay.h
 .\main.o: .\Hardware\OLED.h
-.\main.o: .\Hardware\ConutSensor.h
+.\main.o: .\Hardware\KEY.h

@@ -28,7 +28,6 @@
 ".\delay.o"
 ".\main.o"
 ".\stm32f10x_it.o"
-".\3.o"
 ".\led.o"
 ".\key.o"
 ".\oled.o"
